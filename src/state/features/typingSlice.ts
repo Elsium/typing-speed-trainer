@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice} from '@reduxjs/toolkit'
 
 interface TypingState {
     targetText: string
@@ -6,8 +6,10 @@ interface TypingState {
     startTime: number | null
     endTime: number | null
     errors: number
-    wpm: number
+    spm: number
     isFinished: boolean
+    elapsedTime: number
+    accuracy: number
 }
 
 const initialState: TypingState = {
@@ -16,8 +18,10 @@ const initialState: TypingState = {
     startTime: null,
     endTime: null,
     errors: 0,
-    wpm: 0,
+    spm: 0,
     isFinished: false,
+    elapsedTime: 0,
+    accuracy: 100
 }
 
 const typingSlice = createSlice({
@@ -27,10 +31,10 @@ const typingSlice = createSlice({
         setTargetText: (state, action) => {
             state.targetText = action.payload
         },
+        startTimer: (state) => {
+            state.startTime = Date.now()
+        },
         updateUserInput: (state, action) => {
-            if (state.startTime === null) {
-                state.startTime = Date.now()
-            }
             state.userInput = action.payload
 
             // Подсчет ошибок
@@ -42,23 +46,38 @@ const typingSlice = createSlice({
             }
             state.errors = errors
 
-            if (state.userInput === state.targetText) {
+            if (state.userInput.length === state.targetText.length) {
                 state.isFinished = true
                 state.endTime = Date.now()
+            }
+        },
+        updateStatistics: (state) => {
+            if (state.startTime !== null) {
+                const currentTime = Date.now()
+                const timeTakenInMinutes = (currentTime - state.startTime) / 60000
+                state.spm = Math.round(state.userInput.length / timeTakenInMinutes)
 
-                const timeTakenInMinutes = (state.endTime - state.startTime) / 60000
-                state.wpm = Math.round(state.userInput.length / 5 / timeTakenInMinutes)
+                // Обновление времени
+                state.elapsedTime = Math.floor((currentTime - state.startTime) / 1000)
+
+                // Обновление точности
+                const totalTyped = state.userInput.length
+                state.accuracy = totalTyped > 0 ? Math.round(((totalTyped - state.errors) / totalTyped) * 100) : 100
             }
         },
         reset: (state) => {
             state.userInput = ''
-            state.startTime = null
+            state.startTime = Date.now()
             state.endTime = null
             state.errors = 0
-            state.wpm = 0
+            state.spm = 0
             state.isFinished = false
+            state.elapsedTime = 0
+            state.accuracy = 100
         },
     },
 })
-export const { setTargetText, updateUserInput, reset } = typingSlice.actions
+
+export const { setTargetText, startTimer, updateUserInput, updateStatistics, reset } = typingSlice.actions
 export default typingSlice.reducer
+

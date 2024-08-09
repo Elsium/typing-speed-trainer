@@ -8,24 +8,17 @@ export const TextInput: React.FC = () => {
     const userInput = useSelector((state: RootState) => state.typing.userInput)
     const isFinished = useSelector((state: RootState) => state.typing.isFinished)
 
-    React.useEffect(() => {
-        if (isFinished) {
-            const inputElement = document.getElementById('textInput') as HTMLInputElement
-            inputElement.disabled = true
-        }
-    }, [isFinished])
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(updateUserInput(e.target.value))
     }
 
     return (
         <input
-            id='textInput'
+            autoFocus={true}
             type='text'
             value={userInput}
             onChange={handleChange}
-            className='absolute inset-0 w-full h-full bg-transparent text-transparent caret-transparent focus:outline-none'
+            className='absolute inset-0 w-full h-full bg-transparent text-transparent caret-transparent focus:outline-none select-none'
             autoComplete='off'
             autoCorrect='off'
             autoCapitalize='off'
