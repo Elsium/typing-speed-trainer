@@ -1,9 +1,11 @@
-import {configureStore} from "@reduxjs/toolkit";
-import typingReducer from './features/typingSlice';
+import {configureStore} from '@reduxjs/toolkit'
+import typingReducer from './features/typingSlice'
+import textReducer from './features/textSlice'
 
 export const store = configureStore({
     reducer: {
         typing: typingReducer,
+        texts: textReducer,
     },
     devTools: process.env.NODE_ENV !== 'production'
 })
