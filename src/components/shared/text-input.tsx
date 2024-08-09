@@ -25,9 +25,12 @@ export const TextInput: React.FC = () => {
             type='text'
             value={userInput}
             onChange={handleChange}
-            className='border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 w-full text-xl mt-4'
-            disabled={isFinished}
+            className='absolute inset-0 w-full h-full bg-transparent text-transparent caret-transparent focus:outline-none'
             autoComplete='off'
+            autoCorrect='off'
+            autoCapitalize='off'
+            spellCheck={false}
+            disabled={isFinished}
         />
     )
 }
