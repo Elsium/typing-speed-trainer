@@ -27,6 +27,17 @@ export const TextDisplay: React.FC<TextDisplayProps> = ({ targetText }) => {
             {targetText.split('').map((char, index) => {
                 const isCorrect = userInput[index] === char
                 const color = isCorrect ? 'text-green-500' : 'text-red-500'
+                if (char === ' ' && userInput[index] && !isCorrect) {
+                    return (
+                        <span
+                            key={index}
+                            id={`char-${index}`}
+                            className={color}
+                        >
+                            {userInput[index]}
+                        </span>
+                    )
+                }
                 return (
                     <span
                         key={index}

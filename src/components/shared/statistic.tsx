@@ -1,15 +1,20 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/state/store.ts'
+import {cn} from '@/lib/utils.ts'
 
-export const Statistics: React.FC = () => {
+interface Props {
+    className?: string
+}
+
+export const Statistics: React.FC<Props> = ({className}) => {
     const { errors, spm, elapsedTime, accuracy} = useSelector((state: RootState) => state.typing)
 
     const minutes = Math.floor(elapsedTime / 60)
     const seconds = elapsedTime % 60
 
     return (
-        <div className={'mt-4'}>
+        <div className={cn('mt-4', className)}>
             <p>Ошибки: {errors}</p>
             <p>Символов в минуту: {spm}</p>
             <p>Точность: {accuracy}%</p>
