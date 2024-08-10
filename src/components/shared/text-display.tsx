@@ -1,12 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/state/store.ts'
+import {cn} from '@/lib/utils.ts'
 
 interface TextDisplayProps {
     targetText: string
+    className?: string
 }
 
-export const TextDisplay: React.FC<TextDisplayProps> = ({ targetText }) => {
+export const TextDisplay: React.FC<TextDisplayProps> = ({ targetText, className }) => {
     const userInput = useSelector((state: RootState) => state.typing.userInput)
     const cursorRef = React.useRef<HTMLSpanElement>(null)
 
@@ -23,7 +25,7 @@ export const TextDisplay: React.FC<TextDisplayProps> = ({ targetText }) => {
     }, [userInput])
 
     return (
-        <div className={'relative text-xl font-mono'}>
+        <div className={cn('relative text-xl font-mono px-2 md:px-0', className)}>
             {targetText.split('').map((char, index) => {
                 const isCorrect = userInput[index] === char
                 const color = isCorrect ? 'text-green-500' : 'text-red-500'

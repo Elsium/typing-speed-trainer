@@ -17,16 +17,16 @@ const App: React.FC = () => {
         <section>
             <Header/>
             <Container className={'flex justify-between gap-20 flex-col md:flex-row'}>
-                <div className={'flex flex-col gap-4'}>
+                <div className={'w-auto md:w-1/4 flex flex-col gap-4'}>
                     <ChooseTextType/>
                     {hasStarted && !isFinished && <Statistics className={'-order-1 md:order-none'}/>}
                 </div>
-                <div className={'w-full h-full flex justify-center items-center -order-1 md:order-none'}>
+                <div className={'w-full md:w-1/2 h-full flex justify-center items-center -order-1 md:order-none'}>
                     {!hasStarted && !isFinished
                         && <Button onClick={handleStart}>
                             Старт
                         </Button>}
-                    {!hasStarted && isFinished && <ResultScreen onRestart={handleStart}/>}
+                    {!hasStarted && isFinished && <ResultScreen targetText={targetText} onRestart={handleStart}/>}
                     {hasStarted && !isFinished && (
                         <>
                             <TextDisplay targetText={targetText}/>

@@ -14,7 +14,7 @@ export const Statistics: React.FC<Props> = ({className}) => {
     const seconds = elapsedTime % 60
 
     return (
-        <div className={cn('mt-4', className)}>
+        <div className={cn('mt-4 bg-gray-100 rounded p-4 mx-2 md:mx-0', className)}>
             <p>Ошибки: {errors}</p>
             <p>Символов в минуту: {spm}</p>
             <p>Точность: {accuracy}%</p>
