@@ -3,12 +3,12 @@ import {useSelector} from 'react-redux'
 import {RootState} from '@/state/store.ts'
 import {TextDisplay, TextInput, Statistics, ResultScreen, ChooseTextType, Header, Container} from '@/components/shared'
 import {Button} from '@/components/ui'
-import {useTextType, useFetchTexts, useTyping} from '@/hook'
+import {useFetchTexts, useTyping} from '@/hook'
 
 
 const App: React.FC = () => {
     const texts = useSelector((state: RootState) => state.texts)
-    const {language, textLength} = useTextType()
+    const {language, textLength} = useSelector((state: RootState) => state.textType)
     const {hasStarted, targetText, handleStart, isFinished} = useTyping({texts, language, textLength})
 
     useFetchTexts()
