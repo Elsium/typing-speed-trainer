@@ -14,14 +14,14 @@ export const TextInput: React.FC = () => {
 
     return (
         <input
-            autoFocus={true}
-            type='text'
+            type={'text'}
             value={userInput}
             onChange={handleChange}
-            className='absolute inset-0 w-full h-full bg-transparent text-transparent caret-transparent focus:outline-none select-none'
-            autoComplete='off'
-            autoCorrect='off'
-            autoCapitalize='off'
+            className={'absolute inset-0 w-full h-full bg-transparent text-transparent caret-transparent focus:outline-none select-none'}
+            autoComplete={'off'}
+            autoCorrect={'off'}
+            autoCapitalize={'off'}
+            autoFocus={true}
             spellCheck={false}
             disabled={isFinished}
         />

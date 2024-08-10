@@ -11,6 +11,15 @@ interface Props {
     textLength: TextType.short | TextType.long
 }
 
+const selectRandomText = (texts: string[]): string => {
+    return texts[Math.floor(Math.random() * texts.length)]
+}
+const getTextsByLanguageAndLength = ({texts, language, textLength}: Props): string[] => {
+    return language === TextType.ru
+        ? textLength === TextType.short ? texts.shortTextsRu : texts.longTextsRu
+        : textLength === TextType.short ? texts.shortTextsEn : texts.longTextsEn
+}
+
 export const useTyping = ({texts, language, textLength}: Props) => {
     const dispatch = useDispatch()
     const [targetText, setTargetTextState] = React.useState<string>('')
@@ -19,21 +28,20 @@ export const useTyping = ({texts, language, textLength}: Props) => {
 
     React.useEffect(() => {
         let interval: NodeJS.Timeout
+
         if (hasStarted && !isFinished) {
             interval = setInterval(() => {
                 dispatch(updateStatistics())
             }, 1000)
         }
+
         return () => clearInterval(interval)
     }, [hasStarted, isFinished, dispatch])
 
     const handleStart = () => {
         dispatch(reset())
-        const textsList = language === TextType.ru
-            ? textLength === TextType.short ? texts.shortTextsRu : texts.longTextsRu
-            : textLength === TextType.short ? texts.shortTextsEn : texts.longTextsEn
-
-        const randomText = textsList[Math.floor(Math.random() * textsList.length)]
+        const textsList = getTextsByLanguageAndLength({texts, language, textLength})
+        const randomText = selectRandomText(textsList)
         setTargetTextState(randomText)
         dispatch(setTargetText(randomText))
         setHasStarted(true)

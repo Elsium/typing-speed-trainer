@@ -9,7 +9,7 @@ export const Statistics: React.FC = () => {
     const seconds = elapsedTime % 60
 
     return (
-        <div className='mt-4'>
+        <div className={'mt-4'}>
             <p>Ошибки: {errors}</p>
             <p>Символов в минуту: {spm}</p>
             <p>Точность: {accuracy}%</p>

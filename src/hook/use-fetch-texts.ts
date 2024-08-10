@@ -3,25 +3,33 @@ import axios from 'axios'
 import {Language} from '@/services/constants.ts'
 import {setLongTextsEn, setLongTextsRu, setShortTextsEn, setShortTextsRu} from '@/state/features/textSlice.ts'
 import {useDispatch} from 'react-redux'
+import {PayloadAction} from '@reduxjs/toolkit'
 
 export const useFetchTexts = () => {
     const dispatch = useDispatch()
 
     React.useEffect(() => {
-        const fetchTexts = async () => {
+        const fetchAndDispatch = async (
+            url: string,
+            action: (data: string[]) => PayloadAction<string[]>,
+        ) => {
             try {
-                const resShortEng = await axios.get(Language.shortEng)
-                const resLongEng = await axios.get(Language.longEng)
-                const resShortRu = await axios.get(Language.shortRu)
-                const resLongRu = await axios.get(Language.longRu)
-                dispatch(setShortTextsEn(resShortEng.data))
-                dispatch(setLongTextsEn(resLongEng.data))
-                dispatch(setShortTextsRu(resShortRu.data))
-                dispatch(setLongTextsRu(resLongRu.data))
+                const response = await axios.get(url)
+                dispatch(action(response.data))
             } catch (error) {
-                console.error('Error fetching texts:', error)
+                console.error(`Error fetching data from ${url}:`, error)
             }
         }
+
+        const fetchTexts = async () => {
+            await Promise.all([
+                fetchAndDispatch(Language.shortEng, setShortTextsEn),
+                fetchAndDispatch(Language.longEng, setLongTextsEn),
+                fetchAndDispatch(Language.shortRu, setShortTextsRu),
+                fetchAndDispatch(Language.longRu, setLongTextsRu),
+            ])
+        }
+
         fetchTexts()
     }, [dispatch])
 }

@@ -8,8 +8,8 @@ export const ChooseTextType: React.FC = () => {
     const {language, setLanguage, textLength, setTextLength} = useTextType()
 
     return (
-        <div className='mb-4'>
-            <div className='flex justify-center mb-2'>
+        <div className={'mb-4'}>
+            <div className={'flex justify-center mb-2'}>
                 <Button onClick={() => setLanguage(TextType.en)} variant={language !== TextType.en && 'ghost' || 'outline'}>
                     English
                 </Button>
@@ -17,7 +17,7 @@ export const ChooseTextType: React.FC = () => {
                     Русский
                 </Button>
             </div>
-            <div className='flex justify-center'>
+            <div className={'flex justify-center'}>
                 <Button onClick={() => setTextLength(TextType.short)} variant={textLength !== TextType.short && 'ghost' || 'outline'}>
                     Короткий
                 </Button>

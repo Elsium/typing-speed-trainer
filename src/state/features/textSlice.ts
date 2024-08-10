@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 interface TextState {
     longTextsEn: string[]
@@ -18,16 +18,16 @@ const textSlice = createSlice({
     name: 'text',
     initialState,
     reducers: {
-        setLongTextsEn: (state, action) => {
+        setLongTextsEn: (state, action: PayloadAction<string[]>) => {
             state.longTextsEn = action.payload
         },
-        setShortTextsEn: (state, action) => {
+        setShortTextsEn: (state, action: PayloadAction<string[]>) => {
             state.shortTextsEn = action.payload
         },
-        setLongTextsRu: (state, action) => {
+        setLongTextsRu: (state, action: PayloadAction<string[]>) => {
             state.longTextsRu = action.payload
         },
-        setShortTextsRu: (state, action) => {
+        setShortTextsRu: (state, action: PayloadAction<string[]>) => {
             state.shortTextsRu = action.payload
         },
     }
