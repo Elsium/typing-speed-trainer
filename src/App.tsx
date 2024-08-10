@@ -4,16 +4,18 @@ import { RootState } from '@/state/store.ts'
 import { setTargetText, startTimer, updateStatistics, reset } from '@/state/features/typingSlice.ts'
 import { setShortTextsEn, setLongTextsEn, setLongTextsRu, setShortTextsRu } from '@/state/features/textSlice.ts'
 import axios from 'axios'
-import { TextDisplay, TextInput, Statistics, ResultScreen } from '@/components/shared'
+import {TextDisplay, TextInput, Statistics, ResultScreen, ChooseTextType} from '@/components/shared'
 import {Button} from '@/components/ui'
+import {useTextType} from '@/hook'
 
 
 const App: React.FC = () => {
     const dispatch = useDispatch()
     const isFinished = useSelector((state: RootState) => state.typing.isFinished)
-    const texts = useSelector((state: RootState) => state.texts.longTextsRu)
+    const texts = useSelector((state: RootState) => state.texts)
     const [hasStarted, setHasStarted] = React.useState(false)
     const [targetText, setTargetTextState] = React.useState('')
+    const {language, textLength} = useTextType()
 
     React.useEffect(() => {
         const fetchTexts = async () => {
@@ -45,16 +47,22 @@ const App: React.FC = () => {
 
     const handleStart = () => {
         dispatch(reset())
-        const randomText = texts[Math.floor(Math.random() * texts.length)]
+        const textsList = language === 'ru'
+            ? textLength === 'short' ? texts.shortTextsRu : texts.longTextsRu
+            : textLength === 'short' ? texts.shortTextsEn : texts.longTextsEn
+
+        const randomText = textsList[Math.floor(Math.random() * textsList.length)]
         setTargetTextState(randomText)
         dispatch(setTargetText(randomText))
         setHasStarted(true)
         dispatch(startTimer())
     }
 
+
     return (
         <div className='flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4'>
             <h1 className='text-3xl font-bold mb-8'>Typing Speed Trainer</h1>
+                <ChooseTextType />
             {!hasStarted ? (
                 <Button onClick={handleStart}>
                     Старт

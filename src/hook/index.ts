@@ -1,0 +1,1 @@
+export {useTextType} from './use-text-type'
