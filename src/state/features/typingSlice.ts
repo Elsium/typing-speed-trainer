@@ -1,16 +1,16 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 interface TypingState {
-    targetText: string
-    userInput: string
-    startTime: number | null
-    endTime: number | null
-    errors: number
-    spm: number
-    isFinished: boolean
-    elapsedTime: number
-    accuracy: number
-    hasStarted: boolean
+    targetText: string // Текст, который нужно напечатать
+    userInput: string // Текст, который ввел пользователь
+    startTime: number | null // Время начала печати
+    endTime: number | null // Время окончания печати
+    errors: number // Количество ошибок
+    spm: number // Средняя скорость печати символов в минуту
+    isFinished: boolean // Флаг окончания
+    elapsedTime: number // Продолжительность печати в секундах
+    accuracy: number // Точность печати
+    hasStarted: boolean // Флаг начала печати
 }
 
 const initialState: TypingState = {
@@ -30,12 +30,15 @@ const typingSlice = createSlice({
     name: 'typing',
     initialState,
     reducers: {
+        // Установка текста для печати
         setTargetText: (state, action: PayloadAction<string>) => {
             state.targetText = action.payload
         },
+        // Установка таймера на текущее время
         startTimer: (state) => {
             state.startTime = Date.now()
         },
+        // Обновление пользовательского ввода, считывание ошибок (сравнением с начальным текстом), проверка окончания печати (по длине текста)
         updateUserInput: (state, action: PayloadAction<string>) => {
             state.userInput = action.payload
 
@@ -53,6 +56,12 @@ const typingSlice = createSlice({
                 state.endTime = Date.now()
             }
         },
+        /* Обновление статистики:
+            время для скорости печати - сохраняем текущее время, отнимает от него время начала печати, делим на 60000 для получения минут
+            скорость печати - делим количество введенных символов на время в минутах
+            затраченное время - тоже, что и время для скорости печати, но делим на 1000 для получения секунд
+            точность печати - делим количество корректных символов на общее количество введенных символов, умножаем на 100, округляем и делим на 100 для получения %
+        */
         updateStatistics: (state) => {
             if (state.startTime !== null) {
                 const currentTime = Date.now()
@@ -65,9 +74,11 @@ const typingSlice = createSlice({
                 state.accuracy = totalTyped > 0 ? Math.round(((totalTyped - state.errors) / totalTyped) * 100) : 100
             }
         },
+        // Установка флага начала печати
         setHasStarted: (state, action: PayloadAction<boolean>) => {
             state.hasStarted = action.payload
         },
+        // сброс статистики
         reset: (state) => {
             state.userInput = ''
             state.startTime = Date.now()

@@ -1,19 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {Texts} from '@/services/types.ts'
 
-interface TextState {
-    longTextsEn: string[]
-    shortTextsEn: string[]
-    longTextsRu: string[]
-    shortTextsRu: string[]
-}
-
-const initialState: TextState = {
+const initialState: Texts = {
     longTextsEn: [],
     shortTextsEn: [],
     longTextsRu: [],
     shortTextsRu: [],
 }
 
+// Установка текстов для печати
 const textSlice = createSlice({
     name: 'text',
     initialState,

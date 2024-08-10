@@ -10,10 +10,11 @@ interface Props {
     language: TextType.ru | TextType.en
     textLength: TextType.short | TextType.long
 }
-
+// Выбирает случайную строку из массива
 const selectRandomText = (texts: string[]): string => {
     return texts[Math.floor(Math.random() * texts.length)]
 }
+// Возвращает массив текстов в зависимости от языка и длины выбранных в choose-text-type.tsx
 const getTextsByLanguageAndLength = ({texts, language, textLength}: Props): string[] => {
     return language === TextType.ru
         ? textLength === TextType.short ? texts.shortTextsRu : texts.longTextsRu
@@ -26,6 +27,7 @@ export const useTyping = ({texts, language, textLength}: Props) => {
     const isFinished = useSelector((state: RootState) => state.typing.isFinished)
     const hasStarted = useSelector((state: RootState) => state.typing.hasStarted)
 
+    // Создает интервал обновления статистики
     React.useEffect(() => {
         let interval: NodeJS.Timeout
 
@@ -38,6 +40,7 @@ export const useTyping = ({texts, language, textLength}: Props) => {
         return () => clearInterval(interval)
     }, [hasStarted, isFinished, dispatch])
 
+    // Функция старта: очищает стейт, выбирает случайную строку, привязывает ее к стейту, запускает таймер
     const handleStart = () => {
         dispatch(reset())
         const textsList = getTextsByLanguageAndLength({texts, language, textLength})

@@ -1,3 +1,4 @@
+// Константы приложения
 export enum Language {
     shortEng = '/texts-short-en.json',
     longEng = '/texts-long-en.json',

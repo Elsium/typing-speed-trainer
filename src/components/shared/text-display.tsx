@@ -12,6 +12,7 @@ export const TextDisplay: React.FC<TextDisplayProps> = ({ targetText, className 
     const userInput = useSelector((state: RootState) => state.typing.userInput)
     const cursorRef = React.useRef<HTMLSpanElement>(null)
 
+    // Ищем текущий символ (последний введенный, считает именно порядковый номер символа), для того, чтобы привязать курсор ввода
     React.useEffect(() => {
         if (cursorRef.current) {
             const currentCharElement = document.getElementById(`char-${userInput.length}`)

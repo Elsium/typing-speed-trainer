@@ -4,6 +4,9 @@ import {Language} from '@/services/constants.ts'
 import {setLongTextsEn, setLongTextsRu, setShortTextsEn, setShortTextsRu} from '@/state/features/textSlice.ts'
 import {useDispatch} from 'react-redux'
 import {PayloadAction} from '@reduxjs/toolkit'
+/*
+ * Хук для получения текстов из API (см. services/constants.ts)
+ */
 
 export const useFetchTexts = () => {
     const dispatch = useDispatch()

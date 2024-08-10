@@ -15,9 +15,11 @@ const textTypeSlice = createSlice({
     name: 'textType',
     initialState,
     reducers: {
+        // Установка языка
         setLanguage: (state, action: PayloadAction<TextType.en | TextType.ru>) => {
             state.language = action.payload
         },
+        // Установка длины текста
         setTextLength: (state, action: PayloadAction<TextType.short | TextType.long>) => {
             state.textLength = action.payload
         }
