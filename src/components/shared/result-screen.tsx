@@ -23,6 +23,7 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({ onRestart }) => {
             <p>Ошибки: {errors}</p>
             <p>Символов в минуту: {spm}</p>
             <p>Точность: {accuracy}%</p>
+            <br/>
             <Button onClick={handleRestart}>
                 Перезапустить упражнение
             </Button>

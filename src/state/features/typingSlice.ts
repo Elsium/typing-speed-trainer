@@ -37,7 +37,6 @@ const typingSlice = createSlice({
         updateUserInput: (state, action) => {
             state.userInput = action.payload
 
-            // Подсчет ошибок
             let errors = 0
             for (let i = 0; i < state.userInput.length; i++) {
                 if (state.userInput[i] !== state.targetText[i]) {
@@ -57,10 +56,8 @@ const typingSlice = createSlice({
                 const timeTakenInMinutes = (currentTime - state.startTime) / 60000
                 state.spm = Math.round(state.userInput.length / timeTakenInMinutes)
 
-                // Обновление времени
                 state.elapsedTime = Math.floor((currentTime - state.startTime) / 1000)
 
-                // Обновление точности
                 const totalTyped = state.userInput.length
                 state.accuracy = totalTyped > 0 ? Math.round(((totalTyped - state.errors) / totalTyped) * 100) : 100
             }

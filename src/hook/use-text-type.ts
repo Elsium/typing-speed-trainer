@@ -1,8 +1,9 @@
 import React from 'react'
+import {TextType} from '@/services/constants.ts'
 
 export const useTextType = () => {
-    const [language, setLanguage] = React.useState<'en' | 'ru'>('ru')
-    const [textLength, setTextLength] = React.useState<'short' | 'long'>('short')
+    const [language, setLanguage] = React.useState<TextType.en | TextType.ru>(TextType.ru)
+    const [textLength, setTextLength] = React.useState<TextType.short | TextType.long>(TextType.short)
 
     return {
         language,
